@@ -25,17 +25,28 @@ export default class MathsController extends Controller {
     }
     doOperation() {
 
-        if(parseFloat(this.HttpContext.path.params["x"]) == null){
-            console.log("rwewerwer");
+        if( Object.keys(this.HttpContext.path.params).length  == 1){
+            this.HttpContext.response.JSON({error : "Invalid request" })
+        }
+
+        let x = parseFloat(this.HttpContext.path.params["x"]);
+        if (isNaN(x)) {
+            x = parseFloat(this.HttpContext.path.params["X"])
+        }
+
+        let y = parseFloat(this.HttpContext.path.params["y"]);
+        if (isNaN(y)) {
+            y = parseFloat(this.HttpContext.path.params["Y"])
         }
         let op = this.HttpContext.path.params["op"];
-        let x = parseFloat(this.HttpContext.path.params["x"]);
-        let y = parseFloat(this.HttpContext.path.params["y"]);
+
         let n = parseFloat(this.HttpContext.path.params["n"]);
-        
+
 
 
         if (op == " ") {
+
+
             this.HttpContext.response.JSON({ op: "+", x: x, y: y, value: (x + y) })
         }
         else if (op == "-") {
@@ -65,28 +76,28 @@ export default class MathsController extends Controller {
 
         }
         if (op == "!") {
-            
-            if(n == 0){
+
+            if (n == 0) {
                 this.HttpContext.response.JSON({ op: op, n: n, error: "Impossible with 0" })
             }
-            else if(n < 0){
+            else if (n < 0) {
                 this.HttpContext.response.JSON({ op: op, n: n, error: "Numbers needs to be above 0" })
-            }else if (!Number.isInteger(n)){
-                this.HttpContext.response.JSON({ op: op, n: n, error:"n needs to be an Integer" })
+            } else if (!Number.isInteger(n)) {
+                this.HttpContext.response.JSON({ op: op, n: n, error: "n needs to be an Integer" })
             }
-            else{
+            else {
                 this.HttpContext.response.JSON({ op: op, n: n, value: (factorial(n)) })
             }
-            
+
         }
         if (op == "p") {
             if (n == 0) {
                 this.HttpContext.response.JSON({ op: op, n: n, error: "Impossible with 0" })
             }
-            else if(!Number.isInteger(n)){
-                this.HttpContext.response.JSON({ op: op, n: n, error:"n needs to be an Integer" })
+            else if (!Number.isInteger(n)) {
+                this.HttpContext.response.JSON({ op: op, n: n, error: "n needs to be an Integer" })
             }
-            else{
+            else {
                 this.HttpContext.response.JSON({ op: op, n: n, value: (isPrime(n)) })
             }
 
@@ -97,10 +108,10 @@ export default class MathsController extends Controller {
             if (n == 0) {
                 this.HttpContext.response.JSON({ op: op, n: n, error: "Impossible with 0" })
             }
-            else if(!Number.isInteger(n)){
-                this.HttpContext.response.JSON({ op: op, n: n, error:"n needs to be an Integer" })
+            else if (!Number.isInteger(n)) {
+                this.HttpContext.response.JSON({ op: op, n: n, error: "n needs to be an Integer" })
             }
-            else{
+            else {
                 this.HttpContext.response.JSON({ op: op, n: n, value: (findPrime(n)) })
             }
 
